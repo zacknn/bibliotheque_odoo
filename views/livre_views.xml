@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Action -->
+    <record id="action_gestion_bibliotheque_livre" model="ir.actions.act_window">
+        <field name="name">Livres</field>
+        <field name="res_model">gestion_bibliotheque.livre</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_gestion_bibliotheque_livre_tree" model="ir.ui.view">
+        <field name="name">gestion_bibliotheque.livre.tree</field>
+        <field name="model">gestion_bibliotheque.livre</field>
+        <field name="arch" type="xml">
+            <tree string="Livres">
+                <field name="titre"/>
+                <field name="auteur_id"/>
+                <field name="isbn"/>
+                <field name="langue"/>
+                <field name="annee"/>
+                <field name="nbre_pages"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_gestion_bibliotheque_livre_form" model="ir.ui.view">
+        <field name="name">gestion_bibliotheque.livre.form</field>
+        <field name="model">gestion_bibliotheque.livre</field>
+        <field name="arch" type="xml">
+            <form string="Livre">
+                <sheet>
+                    <field name="image_livre" widget="image" class="oe_avatar"/>
+                    <group>
+                        <group string="Informations">
+                            <field name="titre"/>
+                            <field name="auteur_id"/>
+                            <field name="isbn"/>
+                            <field name="langue"/>
+                        </group>
+                        <group string="Détails">
+                            <field name="annee"/>
+                            <field name="nbre_pages"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Historique des emprunts">
+                            <!-- TP3: editable="top" -->
+                            <field name="emprunt_ligne_ids">
+                                <tree editable="top">
+                                    <field name="emprunt_id"/>
+                                    <field name="isbn"/>
+                                    <field name="nbre_pages"/>
+                                    <field name="langue_livre"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Kanban View -->
+    <record id="view_gestion_bibliotheque_livre_kanban" model="ir.ui.view">
+        <field name="name">gestion_bibliotheque.livre.kanban</field>
+        <field name="model">gestion_bibliotheque.livre</field>
+        <field name="arch" type="xml">
+            <kanban string="Livres">
+                <field name="titre"/>
+                <field name="auteur_id"/>
+                <field name="image_livre"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_image">
+                                <img t-if="record.image_livre.raw_value" 
+                                     t-att-src="'data:image/png;base64,' + record.image_livre.raw_value"/>
+                                <img t-else="" src="/web/static/src/img/placeholder.png"/>
+                            </div>
+                            <div class="oe_kanban_details">
+                                <strong><field name="titre"/></strong>
+                                <div><field name="auteur_id"/></div>
+                                <div><field name="isbn"/></div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_gestion_bibliotheque_livre_search" model="ir.ui.view">
+        <field name="name">gestion_bibliotheque.livre.search</field>
+        <field name="model">gestion_bibliotheque.livre</field>
+        <field name="arch" type="xml">
+            <search string="Rechercher Livre">
+                <field name="isbn" string="ISBN"/>
+                <field name="titre" string="Titre"/>
+                <field name="auteur_id" string="Auteur"/>
+                
+                <filter string="Français" name="langue_francais" domain="[('langue', '=', 'francais')]"/>
+                <filter string="Arabe" name="langue_arabe" domain="[('langue', '=', 'arabe')]"/>
+                <filter string="Anglais" name="langue_anglais" domain="[('langue', '=', 'anglais')]"/>
+                
+                <group expand="0" string="Regrouper par">
+                    <filter string="Auteur" name="group_by_auteur" context="{'group_by': 'auteur_id'}"/>
+                    <filter string="Langue" name="group_by_langue" context="{'group_by': 'langue'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+</odoo>

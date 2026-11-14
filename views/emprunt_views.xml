@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Action -->
+    <record id="action_gestion_bibliotheque_emprunt" model="ir.actions.act_window">
+        <field name="name">Emprunts</field>
+        <field name="res_model">gestion_bibliotheque.emprunt</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_gestion_bibliotheque_emprunt_tree" model="ir.ui.view">
+        <field name="name">gestion_bibliotheque.emprunt.tree</field>
+        <field name="model">gestion_bibliotheque.emprunt</field>
+        <field name="arch" type="xml">
+            <tree string="Emprunts" decoration-danger="rendu == 'non'" decoration-success="rendu == 'oui'">
+                <field name="emprunteur_id"/>
+                <field name="date_debut"/>
+                <field name="date_fin"/>
+                <field name="rendu"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_gestion_bibliotheque_emprunt_form" model="ir.ui.view">
+        <field name="name">gestion_bibliotheque.emprunt.form</field>
+        <field name="model">gestion_bibliotheque.emprunt</field>
+        <field name="arch" type="xml">
+            <form string="Emprunt">
+                <sheet>
+                    <group>
+                        <group string="Informations">
+                            <field name="emprunteur_id"/>
+                            <field name="date_debut"/>
+                            <field name="date_fin"/>
+                            <field name="rendu"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Livres empruntés">
+                            <!-- TP3: editable="top" and new fields -->
+                            <field name="emprunt_ligne_ids">
+                                <tree editable="top">
+                                    <field name="livre_id"/>
+                                    <field name="auteur_id"/>
+                                    <field name="isbn"/>
+                                    <field name="nbre_pages"/>
+                                    <field name="langue_livre"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_gestion_bibliotheque_emprunt_search" model="ir.ui.view">
+        <field name="name">gestion_bibliotheque.emprunt.search</field>
+        <field name="model">gestion_bibliotheque.emprunt</field>
+        <field name="arch" type="xml">
+            <search string="Rechercher Emprunt">
+                <field name="emprunteur_id" string="Emprunteur"/>
+                <field name="emprunt_ligne_ids" string="Auteur" 
+                       filter_domain="[('emprunt_ligne_ids.auteur_id', 'ilike', self)]"/>
+                
+                <group expand="0" string="Regrouper par">
+                    <filter string="Rendu" name="group_by_rendu" context="{'group_by': 'rendu'}"/>
+                    <filter string="Emprunteur" name="group_by_emprunteur" context="{'group_by': 'emprunteur_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+</odoo>

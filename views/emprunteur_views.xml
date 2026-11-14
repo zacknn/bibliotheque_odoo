@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Action -->
+    <record id="action_gestion_bibliotheque_emprunteur" model="ir.actions.act_window">
+        <field name="name">Emprunteurs</field>
+        <field name="res_model">gestion_bibliotheque.emprunteur</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_gestion_bibliotheque_emprunteur_tree" model="ir.ui.view">
+        <field name="name">gestion_bibliotheque.emprunteur.tree</field>
+        <field name="model">gestion_bibliotheque.emprunteur</field>
+        <field name="arch" type="xml">
+            <tree string="Emprunteurs">
+                <field name="nom_complet"/>
+                <field name="date_naissance"/>
+                <field name="nationalite"/>
+                <field name="sexe"/>
+                <!-- TP3: New field -->
+                <field name="nbr_emprunt"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_gestion_bibliotheque_emprunteur_form" model="ir.ui.view">
+        <field name="name">gestion_bibliotheque.emprunteur.form</field>
+        <field name="model">gestion_bibliotheque.emprunteur</field>
+        <field name="arch" type="xml">
+            <form string="Emprunteur">
+                <sheet>
+                    <group>
+                        <group string="Informations personnelles">
+                            <field name="nom"/>
+                            <field name="prenom"/>
+                            <field name="date_naissance"/>
+                            <field name="sexe"/>
+                        </group>
+                        <group string="Autres informations">
+                            <field name="nationalite"/>
+                            <!-- TP3: New field -->
+                            <field name="nbr_emprunt"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Emprunts">
+                            <!-- TP3: editable="top" -->
+                            <field name="emprunt_ids">
+                                <tree editable="top">
+                                    <field name="date_debut"/>
+                                    <field name="date_fin"/>
+                                    <field name="rendu"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_gestion_bibliotheque_emprunteur_search" model="ir.ui.view">
+        <field name="name">gestion_bibliotheque.emprunteur.search</field>
+        <field name="model">gestion_bibliotheque.emprunteur</field>
+        <field name="arch" type="xml">
+            <search string="Rechercher Emprunteur">
+                <field name="nom" string="Nom"/>
+                <field name="prenom" string="Prénom"/>
+                
+                <group expand="0" string="Regrouper par">
+                    <filter string="Sexe" name="group_by_sexe" context="{'group_by': 'sexe'}"/>
+                    <filter string="Nationalité" name="group_by_nationalite" context="{'group_by': 'nationalite'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+</odoo>

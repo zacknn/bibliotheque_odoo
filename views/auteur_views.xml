@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Action -->
+    <record id="action_gestion_bibliotheque_auteur" model="ir.actions.act_window">
+        <field name="name">Auteurs</field>
+        <field name="res_model">gestion_bibliotheque.auteur</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_gestion_bibliotheque_auteur_tree" model="ir.ui.view">
+        <field name="name">gestion_bibliotheque.auteur.tree</field>
+        <field name="model">gestion_bibliotheque.auteur</field>
+        <field name="arch" type="xml">
+            <tree string="Auteurs">
+                <field name="nom_complet"/>
+                <field name="date_naissance"/>
+                <field name="nationalite"/>
+                <field name="sexe"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_gestion_bibliotheque_auteur_form" model="ir.ui.view">
+        <field name="name">gestion_bibliotheque.auteur.form</field>
+        <field name="model">gestion_bibliotheque.auteur</field>
+        <field name="arch" type="xml">
+            <form string="Auteur">
+                <sheet>
+                    <group>
+                        <group string="Informations personnelles">
+                            <field name="nom"/>
+                            <field name="prenom"/>
+                            <field name="date_naissance"/>
+                            <field name="sexe"/>
+                        </group>
+                        <group string="Autres informations">
+                            <field name="nationalite"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Livres écrits">
+                            <!-- TP3: editable="top" -->
+                            <field name="livre_ids">
+                                <tree editable="top">
+                                    <field name="titre"/>
+                                    <field name="isbn"/>
+                                    <field name="langue"/>
+                                    <field name="annee"/>
+                                    <field name="nbre_pages"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_gestion_bibliotheque_auteur_search" model="ir.ui.view">
+        <field name="name">gestion_bibliotheque.auteur.search</field>
+        <field name="model">gestion_bibliotheque.auteur</field>
+        <field name="arch" type="xml">
+            <search string="Rechercher Auteur">
+                <field name="nom" string="Nom"/>
+                <field name="prenom" string="Prénom"/>
+                <field name="nationalite" string="Nationalité"/>
+                
+                <filter string="Tunisiens" name="tunisiens" 
+                        domain="[('nationalite', 'ilike', 'Tunis')]"/>
+                <filter string="Algériens" name="algeriens" 
+                        domain="[('nationalite', 'ilike', 'Alg')]"/>
+                
+                <group expand="0" string="Regrouper par">
+                    <filter string="Nationalité" name="group_by_nationalite" 
+                            context="{'group_by': 'nationalite'}"/>
+                    <filter string="Sexe" name="group_by_sexe" 
+                            context="{'group_by': 'sexe'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+</odoo>
