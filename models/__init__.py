@@ -1,1 +1,9 @@
-from . import auteur, emprunt, emprunteur, livre , emprunt_ligne
+from . import (
+    auteur,
+    emprunt,
+    emprunt_ligne,
+    emprunteur,
+    livre,
+    wizard_ajouter_emprunt,
+    wizard_reset_emprunts,  
+)

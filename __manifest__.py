@@ -1,21 +1,20 @@
 {  # noqa: B018
     'name': 'Gestion Bibliothèque',
-    'version': '3.0',
+    'version': '4.0',
     'category': 'Library',
-    'summary': 'Gestion d une bibliothèque (TP3)',
+    'summary': 'Gestion d une bibliothèque (TP4)',
     'description': """
-        TP3: Champs calculés, contraintes et onchange
-        - editable="top" sur One2many
-        - Champs isbn, nbre_pages, langue dans emprunt_ligne
-        - Mise à jour automatique via onchange
-        - nbr_emprunt calculé
-        - Contraintes sur date_debut
-        - Auto-update rendu quand date_fin = aujourd'hui
+        TP4: Wizards et droits d'accès
+        - Wizard Ajouter Emprunts
+        - Wizard Réinitialiser Emprunts (Directeur only)
+        - Groupes Directeur/Secrétaire
     """,
     'author': 'Your Name',
     'depends': ['base'],
     'data': [
+        'security/groups.xml',
         'security/ir.model.access.csv',
+        'views/wizard_views.xml',
         'views/auteur_views.xml',
         'views/livre_views.xml',
         'views/emprunteur_views.xml',

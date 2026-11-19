@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Wizard: Ajouter Emprunt -->
+    <record id="view_wizard_ajouter_emprunt_form" model="ir.ui.view">
+        <field name="name">gestion_bibliotheque.wizard_ajouter_emprunt.form</field>
+        <field name="model">gestion_bibliotheque.wizard_ajouter_emprunt</field>
+        <field name="arch" type="xml">
+            <form string="Ajouter Emprunt">
+                <group>
+                    <field name="emprunteur_id"/>
+                    <field name="date_fin"/>
+                </group>
+                <group string="Livres à emprunter">
+                    <field name="ligne_ids">
+                        <tree editable="top">
+                            <field name="livre_id"/>
+                            <field name="isbn"/>
+                            <field name="nbre_pages"/>
+                            <field name="langue_livre"/>
+                        </tree>
+                    </field>
+                </group>
+                <footer>
+                    <button name="action_ajouter" string="Ajouter" type="object" class="btn-primary"/>
+                    <button string="Annuler" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action: Ajouter Emprunt -->
+    <record id="action_wizard_ajouter_emprunt" model="ir.actions.act_window">
+        <field name="name">Ajouter Emprunts</field>
+        <field name="res_model">gestion_bibliotheque.wizard_ajouter_emprunt</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="model_gestion_bibliotheque_emprunteur"/>
+        <field name="binding_type">action</field>
+    </record>
+
+    <!-- Wizard: Reset Emprunts -->
+    <record id="view_wizard_reset_emprunts_form" model="ir.ui.view">
+        <field name="name">gestion_bibliotheque.wizard_reset_emprunts.form</field>
+        <field name="model">gestion_bibliotheque.wizard_reset_emprunts</field>
+        <field name="arch" type="xml">
+            <form string="Réinitialiser Emprunts">
+                <group>
+                    <field name="emprunteur_id"/>
+                </group>
+                <p>Êtes-vous sûr de vouloir supprimer tous les emprunts de cet emprunteur ?</p>
+                <footer>
+                    <button name="action_reset" string="Confirmer" type="object" class="btn-danger"/>
+                    <button string="Annuler" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action: Reset Emprunts (Directeur only) -->
+    <record id="action_wizard_reset_emprunts" model="ir.actions.act_window">
+        <field name="name">Réinitialiser Emprunts</field>
+        <field name="res_model">gestion_bibliotheque.wizard_reset_emprunts</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="model_gestion_bibliotheque_emprunteur"/>
+        <field name="binding_type">action</field>
+        <field name="groups_id" eval="[(4, ref('group_directeur'))]"/>
+    </record>
+</odoo>
